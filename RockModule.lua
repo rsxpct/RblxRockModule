@@ -1,6 +1,4 @@
---!nonstrict
-
--- Last Updated 05/10/22 (English Dates)
+-- Last Updated 10/10/22 (English Dates)
 
 --[[
 		RockModule V1.0 by rsxpct
@@ -48,7 +46,6 @@
 			MaximumSize = Maximum Size of each rock. (Number)
 			MinimumAmount = Minimum Amount of rocks to explode. (Number)
 			MaxmimumAmount = Maximum Amount of rocks to explode (Number)
-
 			Then the final argument, OnFire. Should the rocks be on fire. (Boolean)
 			
 --]]
@@ -71,11 +68,11 @@ RockModule.__index = RockModule
 
 function RockModule.new(Player: Player)
 	local self = setmetatable({}, RockModule)
-	
+
 	self.Player = Player
-	
+
 	self._PartCache = PartCache.new(Instance.new("Part"), 200, CacheFolder)
-	
+
 	return self
 end
 
@@ -160,27 +157,27 @@ function RockModule:GroundRing(Position: Vector3, Size: Vector3, Distance: numbe
 	local Size = Size or Vector3.new(1.5, 1.5, 1.5)
 	local Position = Position
 	local DespawnTime = DespawnTime or 3
-	
+
 	local Ice = Data.Ice or false
 	local OnFire = Data.OnFire or false
-	
+
 	local MaxRocks = Data.MaxRocks or 20
-	
+
 	local Angle = 30
 	local OtherAngle = 360/MaxRocks
-	
+
 	local Parameters = RaycastParams.new()
 	Parameters.FilterType = Enum.RaycastFilterType.Blacklist
 	Parameters.FilterDescendantsInstances = RayFilter or {self.Player.Character, CacheFolder, workspace.Debris}
-	
+
 	local VfxPart = Instance.new("Part")
 	VfxPart.Transparency = 1
 	VfxPart.Anchored = true
 	VfxPart.Position = Position
 	VfxPart.Size = Vector3.new()
-	
+
 	VfxPart.Parent = workspace.Debris
-	
+
 	local Raycast = workspace:Raycast(Position + Vector3.new(0, 1, 0), Vector3.new(0, -25, 0), Parameters)
 	if Raycast then
 		local DustParticles = script.Dust:Clone()
@@ -189,9 +186,9 @@ function RockModule:GroundRing(Position: Vector3, Size: Vector3, Distance: numbe
 		DustParticles.Parent = VfxPart
 		DustParticles:Emit(DustParticles:GetAttribute("EmitCount"))
 	end
-	
+
 	game.Debris:AddItem(VfxPart, 3)
-	
+
 	local function OuterParts()
 		for i = 1, MaxRocks do
 			local cf = CFrame.new(Position)
@@ -248,7 +245,7 @@ function RockModule:GroundRing(Position: Vector3, Size: Vector3, Distance: numbe
 			end		
 		end
 	end
-	
+
 	local function InnerParts()
 		for i = 1, MaxRocks do
 			local cf = CFrame.new(Position)
@@ -305,7 +302,7 @@ function RockModule:GroundRing(Position: Vector3, Size: Vector3, Distance: numbe
 			end		
 		end
 	end
-	
+
 	OuterParts()
 	InnerParts()
 end
@@ -313,7 +310,7 @@ end
 function RockModule:Release()
 	self._PartCache:Dispose()
 	self._PartCache = nil
-	
+
 	self._Player = nil
 end
 
