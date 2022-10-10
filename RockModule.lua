@@ -1,4 +1,4 @@
---! non-strict
+--!nonstrict
 
 -- Last Updated 05/10/22 (English Dates)
 
